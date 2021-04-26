@@ -5,26 +5,26 @@ import Tabs from '../views/Tabs.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
+    redirect: '/tchat-general'
   },
   {
-    path: '/tabs/',
+    path: '/',
     component: Tabs,
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
+        redirect: '/tchat-general'
       },
       {
-        path: 'tab1',
+        path: 'tchat-general',
         component: () => import('@/views/TchatGeneral.vue')
       },
       {
-        path: 'tab2',
+        path: 'messages-prives',
         component: () => import('@/views/MessagesPrives.vue')
       },
       {
-        path: 'tab3',
+        path: 'parametres',
         component: () => import('@/views/Parametres.vue')
       }
     ]
