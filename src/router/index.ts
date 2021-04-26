@@ -26,6 +26,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'parametres',
         component: () => import('@/views/Parametres.vue')
+      },
+      {
+        path: 'connexion',
+        component: () => import('@/views/Connexion.vue')
       }
     ]
   }
