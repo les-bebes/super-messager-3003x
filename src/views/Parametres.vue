@@ -11,7 +11,7 @@
 
         <ion-item>
             Thème obscur
-          <ion-toggle checked @click="onToggle($event.target.value)" ></ion-toggle>
+          <ion-toggle checked @click="onToggle()" ></ion-toggle>
         </ion-item>
 
         <ion-item>
@@ -20,22 +20,22 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked" >Modifier votre pseudo</ion-label>
+          <ion-label position="stacked" >Modifiez votre pseudo</ion-label>
         <ion-input placeholder="ex. D'artagnan"></ion-input>
         </ion-item>
         
         <ion-item>
-          <ion-label position="stacked" >Modifier son mot de passe</ion-label>
-          <ion-input placeholder="ex. Az€rTy123!"></ion-input>
+          <ion-label position="stacked" >Nouveau mot de passe</ion-label>
+          <ion-input type="password" placeholder="ex. Az€rTy123!"></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked" >Confirmer le mot de passe</ion-label>
-          <ion-input placeholder="ex. La même chose"></ion-input>
+          <ion-label position="stacked" >Confirmez le mot de passe</ion-label>
+          <ion-input type="password" placeholder="ex. La même chose"></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-button>Confirmer</ion-button>
+          <ion-button>Enregistrer</ion-button>
         </ion-item>
 
         <ion-item>
@@ -64,32 +64,24 @@ export default  {
     }
   },
   created() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // Listen for changes to the prefers-color-scheme media query
-    prefersDark.addListener((e) => this.checkToggle(e.matches));
+    // // Listen for changes to the prefers-color-scheme media query
+    // prefersDark.addListener((e) => this.checkToggle(e.matches));
 
-    this.checkToggle(prefersDark.matches);
+    // this.checkToggle(prefersDark.matches);
   },
   methods: {
-    onToggle(value) {
+    onToggle() {
       this.isDark = !this.isDark;
       document.body.classList.toggle('dark', this.isDark);
-      console.log(this.isDark);
-      console.log(value);
 
-      // document.body.classList.toggle('dark', ev.detail.checked);
     },
-    // Called by the media query to check/uncheck the toggle
-    checkToggle(shouldCheck) {
-      // toggle.checked = shouldCheck;
-    }
     
   }
 }
 </script>
 
 <style scoped>
-ion-input {
-}
+
 </style>
