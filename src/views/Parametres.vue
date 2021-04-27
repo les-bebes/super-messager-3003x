@@ -6,23 +6,82 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Tab 3</ion-title>
-        </ion-toolbar>
-      </ion-header>
       
-      <ExploreContainer name="Tab 3 page" />
+      <ion-list>
+
+        <ion-item>
+            Thème obscur
+          <ion-toggle checked @click="onToggle()" ></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          Notifications
+          <ion-toggle checked ></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked" >Modifiez votre pseudo</ion-label>
+        <ion-input placeholder="ex. D'artagnan"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="stacked" >Nouveau mot de passe</ion-label>
+          <ion-input type="password" placeholder="ex. Az€rTy123!"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked" >Confirmez le mot de passe</ion-label>
+          <ion-input type="password" placeholder="ex. La même chose"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-button>Enregistrer</ion-button>
+        </ion-item>
+
+        <ion-item>
+          <ion-button color="dark">Déconnexion</ion-button>
+        </ion-item>
+        
+        <ion-item>
+          <ion-button color="danger"> Suppression du compte</ion-button>
+        </ion-item>
+
+      </ion-list>
+    
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
 
 export default  {
   name: 'Tab3',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+  data: () => {
+    return {
+      isDark: true
+    }
+  },
+  created() {
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // // Listen for changes to the prefers-color-scheme media query
+    // prefersDark.addListener((e) => this.checkToggle(e.matches));
+
+    // this.checkToggle(prefersDark.matches);
+  },
+  methods: {
+    onToggle() {
+      this.isDark = !this.isDark;
+      document.body.classList.toggle('dark', this.isDark);
+
+    },
+    
+  }
 }
 </script>
+
+<style scoped>
+
+</style>
