@@ -1,7 +1,4 @@
 <style>
-.ion-avatar{
-  padding-left: 1em;
-}
 .ion-label{
   padding-left: 1em;
 }
@@ -22,8 +19,14 @@
           <ion-label>SuP€r-M€$$@g3R-3003x</ion-label>
         </ion-list-header>
         <ion-item>
-          <ion-avatar class="ion-avatar"><img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" /></ion-avatar>
+          <ion-avatar class="ion-avatar"><img src="https://www.aveleyman.com/Gallery/2017/D/57506-29968.jpg" /></ion-avatar>
           <ion-label class="ion-label">SuperTesteur</ion-label>
+          <ion-text>Comment est votre blanquette ?</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-avatar class="ion-avatar"><img src="https://www.aveleyman.com/Gallery/2017/D/57506-29968.jpg" /></ion-avatar>
+          <ion-label class="ion-label">SuperTesteur</ion-label>
+          <ion-text>Comment est votre blanquette ?</ion-text>
         </ion-item>
       </ion-list>
       <ion-item class="ion-input">
@@ -38,6 +41,16 @@ import { IonPage, IonContent, IonItem, IonList, IonLabel, IonAvatar, IonInput } 
 
 export default  {
   name: 'Tab1',
-  components: { IonContent, IonPage, IonItem, IonList, IonLabel, IonAvatar, IonInput }
+  components: { IonContent, IonPage, IonItem, IonList, IonLabel, IonAvatar, IonInput },
+  data: function (){
+    return {
+      // les messages
+      messages: [],
+      // les utilisateurs
+      utilisateurs: []
+    }
+  },
+  methods: {
+  }
 }
 </script>

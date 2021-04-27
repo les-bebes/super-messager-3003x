@@ -1,0 +1,26 @@
+{
+    "messages": [
+        {
+            "content": "Comment est votre blanquette ?",
+            "created_at": "2021-04-27 09:55:12",
+            "auteur_id": 2,
+            "destinataire_id": null
+        },
+        {
+            "content": "Elle est... bonne",
+            "created_at": "2021-04-27 09:55:18",
+            "auteur_id": 1,
+            "destinataire_id": null
+        }
+    ],
+    "utilisateurs": [
+        {
+            "id": 1,
+            "pseudo": "Lucien Bramard"
+        },
+        {
+            "id": 2,
+            "pseudo": "Larmina El Akmar Betouche"
+        }
+]
+}
