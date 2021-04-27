@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-tabs>
-      <ion-tab-bar slot="bottom">
+      <ion-tab-bar slot="bottom" v-if="isLogged">
         <ion-tab-button tab="tab1" href="/tchat-general">
           <ion-icon :icon="people" />
           <ion-label>Tchat général</ion-label>
@@ -21,18 +21,33 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage } from '@ionic/vue';
 import { cog, person, people } from 'ionicons/icons';
+import { useStore } from 'vuex';
+import { key } from '@/store';
 
 export default {
   name: 'Tabs',
   components: { IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
+  data: () => {
+    return {
+      store: null
+    }
+  },
   setup() {
     return {
       cog,
       person,
       people,
+    }
+  },
+  created() {
+    this.store = useStore(key)
+  },
+  computed: {
+    isLogged: function () {
+      return this.store.state.token !== null && this.store.state.token !== "";
     }
   }
 }

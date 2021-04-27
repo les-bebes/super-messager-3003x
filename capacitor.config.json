@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "superMessager3003X",
+  "appId": "fr.les-bebes.supermessager3003x",
+  "appName": "SuperMessager3003X",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",
