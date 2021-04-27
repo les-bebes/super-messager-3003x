@@ -5,8 +5,9 @@
 }
 .ion-textarea{
   position: fixed;
-  bottom: 60px;
-  width: 100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 .ion-avatar{
   width: 50px;
@@ -61,12 +62,12 @@ p{
 </template>
 
 <script lang="ts">
-import { IonPage, IonContent, IonItem, IonList, IonLabel, IonAvatar, IonTextarea, IonIcon, IonButton } from '@ionic/vue';
+import { IonPage, IonContent, IonItem, IonList, IonLabel, IonAvatar, IonTextarea, IonIcon, IonButton, IonText } from '@ionic/vue';
 import { paperPlaneOutline } from 'ionicons/icons';
 
 export default  {
   name: 'Tab1',
-  components: { IonContent, IonPage, IonItem, IonList, IonLabel, IonAvatar, IonTextarea, IonIcon, IonButton },
+  components: { IonContent, IonPage, IonItem, IonList, IonLabel, IonAvatar, IonTextarea, IonIcon, IonButton, IonText },
   setup: function(){
     return {
       paperPlaneOutline
