@@ -1,12 +1,12 @@
 <template>
   <ion-page>
-    <ion-content>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Connexion</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Connexion</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
+    <ion-content>
       <ion-card class="middle">
         <ion-card-header>
           <ion-card-title class="ion-text-center">
@@ -27,9 +27,15 @@
             </ion-item>
 
             <div class="ion-text-center">
-              <ion-button type="submit" class="ion-margin-top">Connexion</ion-button>
+              <ion-button type="submit" class="ion-margin-top">Se connecter</ion-button>
             </div>
           </form>
+          <div class="ion-text-center ion-margin-top">
+            <router-link to="/inscription">
+              Vous n'avez pas de compte ?
+              Inscrivez-vous !
+            </router-link>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -99,6 +105,6 @@ export default {
     font-size: 100px;
   }
   .middle {
-    transform: translateY(50%);
+    transform: translateY(10%);
   }
 </style>

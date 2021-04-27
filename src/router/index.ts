@@ -26,6 +26,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'connexion',
         component: () => import('@/views/auth/Connexion.vue')
+      },
+      {
+        path: 'inscription',
+        component: () => import('@/views/auth/Inscription.vue')
       }
     ]
   }
