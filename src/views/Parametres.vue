@@ -75,13 +75,19 @@ export default  {
     onToggle() {
       this.isDark = !this.isDark;
       document.body.classList.toggle('dark', this.isDark);
-
-    },
-    
+    },    
   }
 }
 </script>
 
 <style scoped>
-
+/* ion-item {
+  border-bottom: 1px solid #888;
+} */
+body.dark ion-item {
+  border-bottom: 1px solid #444;
+}
+item-inner {
+  border-bottom: 1px solid #444;
+}
 </style>
