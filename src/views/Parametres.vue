@@ -10,28 +10,28 @@
       <ion-list>
 
         <ion-item>
-            Dark Thème
+            Thème obscur
+          <ion-toggle checked @click="onToggle($event.target.value)" ></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          Notifications
           <ion-toggle checked ></ion-toggle>
         </ion-item>
 
         <ion-item>
-          Notifications : 
-          <ion-toggle checked ></ion-toggle>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Pseudo :</ion-label>
-        <ion-input></ion-input>
+          <ion-label position="stacked" >Modifier votre pseudo</ion-label>
+        <ion-input placeholder="ex. D'artagnan"></ion-input>
         </ion-item>
         
         <ion-item>
-          Modifier son mot de passe : 
-          <ion-input></ion-input>
+          <ion-label position="stacked" >Modifier son mot de passe</ion-label>
+          <ion-input placeholder="ex. Az€rTy123!"></ion-input>
         </ion-item>
 
         <ion-item>
-          Confirmer le mot de passe : 
-          <ion-input></ion-input>
+          <ion-label position="stacked" >Confirmer le mot de passe</ion-label>
+          <ion-input placeholder="ex. La même chose"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -52,18 +52,44 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
 export default  {
   name: 'Tab3',
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+  data: () => {
+    return {
+      isDark: true
+    }
+  },
+  created() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Listen for changes to the prefers-color-scheme media query
+    prefersDark.addListener((e) => this.checkToggle(e.matches));
+
+    this.checkToggle(prefersDark.matches);
+  },
+  methods: {
+    onToggle(value) {
+      this.isDark = !this.isDark;
+      document.body.classList.toggle('dark', this.isDark);
+      console.log(this.isDark);
+      console.log(value);
+
+      // document.body.classList.toggle('dark', ev.detail.checked);
+    },
+    // Called by the media query to check/uncheck the toggle
+    checkToggle(shouldCheck) {
+      // toggle.checked = shouldCheck;
+    }
+    
+  }
 }
 </script>
 
-
 <style scoped>
 ion-input {
-  background: #333;
 }
 </style>
