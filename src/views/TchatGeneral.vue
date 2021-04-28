@@ -51,19 +51,22 @@ p{
           </ion-text>
         </ion-item>
       </ion-list>
-      <ion-item class="ion-textarea">
-        <ion-textarea placeholder="Message texte"></ion-textarea>
-        <ion-button size="large" fill="clear">
-          <ion-icon :icon="paperPlaneOutline" />
-        </ion-button>
-      </ion-item>
+      <form action="#" @submit.prevent="onSubmit" @keypress.enter="onSubmit">
+        <ion-item class="ion-textarea">
+            <ion-textarea v-model="content" placeholder="Message texte"></ion-textarea>
+            <ion-button type="submit" size="large" fill="clear">
+              <ion-icon :icon="paperPlaneOutline" />
+            </ion-button>
+        </ion-item>
+      </form>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import { IonPage, IonContent, IonItem, IonList, IonLabel, IonAvatar, IonTextarea, IonIcon, IonButton, IonText } from '@ionic/vue';
 import { paperPlaneOutline } from 'ionicons/icons';
+import firebase from 'firebase'
 
 export default  {
   name: 'Tab1',
@@ -75,13 +78,36 @@ export default  {
   },
   data: function (){
     return {
+      // le contenu du message
+      content: '',
       // les messages
       messages: [],
       // les utilisateurs
       utilisateurs: []
     }
   },
+  created(){
+    const database = firebase.database();
+    const messages = database.ref('/').child('messages');
+  },
   methods: {
-  }
+    async saveMessage(auteurId, content, date, destinataireId){
+      // A post entry.
+      const postData = {
+        'auteur_id': auteurId,
+        'content': content,
+        'date': date,
+        'destinataire_id': destinataireId
+      };
+
+      // Get a key for a new Post.
+      return firebase.database().ref('/').child('messages').push(postData);
+    },
+
+    // Enregistrement d'un nouveau message
+    onSubmit() {
+      this.saveMessage('', this.content, new Date(), '');
+    }
+  },
 }
 </script>
