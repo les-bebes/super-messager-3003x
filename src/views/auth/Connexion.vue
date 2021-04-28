@@ -83,10 +83,6 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(userCredential => {
         firebase.database().ref('/').child(`utilisateurs/${userCredential.user.uid}`).get().then(value => {
           this.store.commit('updateUser', value.val())
-
-          console.log(value.val())
-
-          this.store.commit('updateUser', userCredential.user)
           this.$router.push({name: 'general'})
         }).catch(reason => {
           this.alertPop('Erreur', 'Impossible de récupérer vos données utilisateurs')

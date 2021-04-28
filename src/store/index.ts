@@ -3,7 +3,7 @@ import { createStore, Store } from 'vuex'
 
 // define your typings for the store state
 export interface State {
-    user?: any;
+    user: any;
 }
 
 // define injection key
