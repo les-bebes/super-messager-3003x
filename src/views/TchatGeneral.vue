@@ -36,18 +36,11 @@ p{
         <ion-list-header lines="full">
           <ion-label class="ion-title">Tchat général</ion-label>
         </ion-list-header>
-        <ion-item class="general-item">
-          <ion-avatar class="ion-avatar"><img src="http://www.non-stop-zapping.com/sites/non-stop-zapping.com/files/styles/article/public/styles/paysage/public/images/2016/10/0006794_gal_005_med.jpg?itok=UFNvBoVN" /></ion-avatar>
+        <ion-item class="general-item" v-for="(message, index) in messages" :key="index">
+          <ion-avatar class="ion-avatar"><img :src="utilisateurs[message.auteur_id].avatar" /></ion-avatar>
           <ion-text>
-            <ion-text color="secondary" class="pseudo-text">Dolorès Koulechov</ion-text>
-            <p>Comment est votre blanquette ?</p>
-          </ion-text>
-        </ion-item>
-        <ion-item class="general-item">
-          <ion-avatar class="ion-avatar"><img src="https://www.aveleyman.com/Gallery/2017/D/57506-29968.jpg" /></ion-avatar>
-          <ion-text>
-            <ion-text color="danger" class="pseudo-text">Hubert Bonisseur de la Bath</ion-text>
-            <p>Elle est... bonne.</p>
+            <ion-text color="secondary" class="pseudo-text">{{ utilisateurs[message.auteur_id].pseudo }}</ion-text>
+            <p>{{ message.content }}</p>
           </ion-text>
         </ion-item>
       </ion-list>
@@ -83,31 +76,54 @@ export default  {
       // les messages
       messages: [],
       // les utilisateurs
-      utilisateurs: []
+      utilisateurs: {}
     }
   },
-  created(){
-    const database = firebase.database();
-    const messages = database.ref('/').child('messages');
+  created() {
+
+    // recuperation des utilisateurs
+    firebase.database().ref('/').child('utilisateurs').get().then((value)=>{
+      this.utilisateurs = value.val();
+
+      // recuperation des messages
+      firebase.database().ref('/').child('messages').get().then((snapshotMessage)=>{
+        const messages = [];
+        snapshotMessage.forEach(childSnapshot => {
+          messages.push(childSnapshot.val())
+        })
+        this.messages = messages
+
+        // recuperation des messages en temps réel
+        firebase.database().ref('/messages').limitToLast(0).on('child_added', (snapshot)=>{
+          this.messages.push(snapshot.val())
+        })
+      }).catch(console.log)
+    }).catch(console.log)
   },
   methods: {
-    async saveMessage(auteurId, content, date, destinataireId){
+    async saveMessage(auteurId, content, date){
+      console.log(this.messages)
+
       // A post entry.
       const postData = {
         'auteur_id': auteurId,
         'content': content,
         'date': date,
-        'destinataire_id': destinataireId
+        'type': 'general'
       };
 
       // Get a key for a new Post.
-      return firebase.database().ref('/').child('messages').push(postData);
+      return firebase.database().ref('/').child('messages').push(postData).then(()=>{
+        console.log("message envoyé")
+      }).catch((reason)=>{
+        console.log(reason)
+      });
     },
 
     // Enregistrement d'un nouveau message
     onSubmit() {
-      this.saveMessage('', this.content, new Date(), '');
-    }
+      this.saveMessage(firebase.auth().currentUser.uid, this.content, new Date());
+    },
   },
 }
 </script>
