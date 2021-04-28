@@ -5,8 +5,9 @@
 }
 .ion-textarea{
   position: fixed;
-  bottom: 60px;
-  width: 100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 .ion-avatar{
   width: 50px;

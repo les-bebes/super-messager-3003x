@@ -16,7 +16,7 @@
 
         <ion-item>
           Notifications
-          <ion-toggle checked ></ion-toggle>
+          <ion-toggle checked @click="onNotif()"  ></ion-toggle>
         </ion-item>
 
         <ion-item>
@@ -35,15 +35,17 @@
         </ion-item>
 
         <ion-item>
-          <ion-button>Enregistrer</ion-button>
+          <ion-button @click="saveUser()">Enregistrer</ion-button>
         </ion-item>
 
         <ion-item>
-          <ion-button color="dark">Déconnexion</ion-button>
+          <router-link to="/connexion">
+            <ion-button color="dark">Déconnexion</ion-button>
+          </router-link>
         </ion-item>
         
         <ion-item>
-          <ion-button color="danger"> Suppression du compte</ion-button>
+          <ion-button @click="deleteUser()" color="danger">Suppression du compte</ion-button>
         </ion-item>
 
       </ion-list>
@@ -60,7 +62,10 @@ export default  {
   components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
   data: () => {
     return {
-      isDark: true
+      isDark: true,
+      notifOn: true,
+      username: null,
+      password: null,
     }
   },
   created() {
@@ -72,10 +77,29 @@ export default  {
     // this.checkToggle(prefersDark.matches);
   },
   methods: {
+    onNotif() {
+      this.notifOn = !this.notifOn;
+      if(this.notifOn) {
+        console.log("notifs activées");
+      }
+      else {        
+        console.log("notifs désactivées");
+      }
+      // document.body.classList.toggle('dark', this.isDark);
+    },
     onToggle() {
       this.isDark = !this.isDark;
       document.body.classList.toggle('dark', this.isDark);
-    },    
+    },
+    decoUser() {
+      console.log("deco");
+    },
+    deleteUser() {
+      console.log("delete");
+    },
+    saveUser() {
+      console.log("save");
+    },
   }
 }
 </script>
