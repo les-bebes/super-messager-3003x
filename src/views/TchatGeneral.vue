@@ -22,6 +22,9 @@
   border-bottom: 1px solid #88888888;
   margin: 2px;
 }
+.list-message{
+  margin-bottom: 60px;
+}
 p{
   font-size: 1em;
   margin-top: 0.5em;
@@ -32,7 +35,7 @@ p{
 <template>
   <ion-page>
     <ion-content>
-      <ion-list>
+      <ion-list class="list-message">
         <ion-list-header lines="full">
           <ion-label class="ion-title">Tchat général</ion-label>
         </ion-list-header>
@@ -89,13 +92,19 @@ export default  {
       firebase.database().ref('/').child('messages').get().then((snapshotMessage)=>{
         const messages = [];
         snapshotMessage.forEach(childSnapshot => {
-          messages.push(childSnapshot.val())
+          const value = childSnapshot.val();
+          if(value.type == 'general'){
+            messages.push(value)
+          }
         })
         this.messages = messages
 
         // recuperation des messages en temps réel
-        firebase.database().ref('/messages').limitToLast(0).on('child_added', (snapshot)=>{
-          this.messages.push(snapshot.val())
+        firebase.database().ref('/messages').limitToLast(1).on('child_added', (snapshot)=>{
+          const value = snapshot.val();
+          if(value.type == 'general'){
+            this.messages.push(value)
+          }
         })
       }).catch(console.log)
     }).catch(console.log)
