@@ -4,6 +4,7 @@ import router from './router';
 import { store, key } from './store';
 import firebase from 'firebase'
 import { IonicVue } from '@ionic/vue';
+import mixin from "@/mixin";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -27,7 +28,8 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
-  .use(store, key);
+  .use(store, key)
+  .mixin(mixin);
 
 const firebaseConfig = {
   apiKey: "AIzaSyCb3DbLVqsIpByIV-0pW-Sq9UVsnENgIjw",
@@ -36,7 +38,8 @@ const firebaseConfig = {
   storageBucket: "supermessager3003x.appspot.com",
   messagingSenderId: "399097766565",
   appId: "1:399097766565:web:6b0aebc4c16e166f36234c",
-  measurementId: "G-F2WTW6SY0N"
+  measurementId: "G-F2WTW6SY0N",
+  databaseURL: "https://supermessager3003x-default-rtdb.europe-west1.firebasedatabase.app"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

@@ -5,7 +5,7 @@ import Tabs from '../views/Tabs.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/connexion'
+    redirect: {name: 'general'}
   },
   {
     path: '/',
@@ -13,19 +13,28 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: 'tchat-general',
+        name: 'general',
         component: () => import('@/views/TchatGeneral.vue')
       },
       {
         path: 'messages-prives',
+        name: 'private',
         component: () => import('@/views/MessagesPrives.vue')
       },
       {
         path: 'parametres',
+        name: 'params',
         component: () => import('@/views/Parametres.vue')
       },
       {
         path: 'connexion',
+        name: 'login',
         component: () => import('@/views/auth/Connexion.vue')
+      },
+      {
+        path: 'inscription',
+        name: 'register',
+        component: () => import('@/views/auth/Inscription.vue')
       }
     ]
   }

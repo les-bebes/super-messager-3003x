@@ -1,12 +1,12 @@
 <template>
   <ion-page>
-    <ion-content>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Connexion</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Connexion</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
+    <ion-content>
       <ion-card class="middle">
         <ion-card-header>
           <ion-card-title class="ion-text-center">
@@ -15,7 +15,7 @@
         </ion-card-header>
 
         <ion-card-content>
-          <form action="#" @submit="submit($event)">
+          <form action="#" @submit="submit" @keypress.enter="submit">
             <ion-item>
               <ion-label position="stacked">Nom d'utilisateur</ion-label>
               <ion-input placeholder="Nom d'utilisateur" v-model="username" required></ion-input>
@@ -27,9 +27,15 @@
             </ion-item>
 
             <div class="ion-text-center">
-              <ion-button type="submit" class="ion-margin-top">Connexion</ion-button>
+              <ion-button type="submit" class="ion-margin-top">Se connecter</ion-button>
             </div>
           </form>
+          <div class="ion-text-center ion-margin-top">
+            <router-link to="/inscription">
+              Vous n'avez pas de compte ?
+              Inscrivez-vous !
+            </router-link>
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -41,6 +47,7 @@ import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardConte
 import { person } from 'ionicons/icons';
 import { useStore } from 'vuex';
 import { key } from '@/store';
+import firebase from "firebase";
 
 export default {
   name: "Connexion",
@@ -60,6 +67,9 @@ export default {
   created() {
     this.store = useStore(key)
   },
+  activated() {
+    firebase.auth().signOut()
+  },
   methods: {
     submit(event) {
       this.login()
@@ -70,25 +80,18 @@ export default {
       return false
     },
     async login() {
-      fetch('/api/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password,
+      firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(userCredential => {
+        firebase.database().ref('/').child(`utilisateurs/${userCredential.user.uid}`).get().then(value => {
+          this.store.commit('updateUser', value.val())
+          this.$router.push({name: 'general'})
+        }).catch(reason => {
+          this.alertPop('Erreur', 'Impossible de récupérer vos données utilisateurs')
+          console.log(reason)
         })
-      }).then(value => {
-        this.store.commit('updateUser', {
-          token: value,
-          user: this.username
-        })
-
-      }).catch(console.log)
-
-      this.store.commit('updateUser', {
-        token: "dpovlknfdglkvjndjksfnkedsnfkjndfgjk",
-        user: this.username
+      }).catch(reason => {
+        this.alertPop('Erreur', 'La connexion a échoué')
+        console.log(reason);
       })
-      this.$router.push('/tchat-general')
     }
   }
 }
@@ -99,6 +102,6 @@ export default {
     font-size: 100px;
   }
   .middle {
-    transform: translateY(50%);
+    transform: translateY(10%);
   }
 </style>
