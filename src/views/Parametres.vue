@@ -21,17 +21,17 @@
 
         <ion-item>
           <ion-label position="stacked" >Modifiez votre pseudo</ion-label>
-        <ion-input placeholder="ex. D'artagnan"></ion-input>
+        <ion-input placeholder="ex. D'artagnan" v-model="username"></ion-input>
         </ion-item>
         
         <ion-item>
           <ion-label position="stacked" >Nouveau mot de passe</ion-label>
-          <ion-input type="password" placeholder="ex. Az€rTy123!"></ion-input>
+          <ion-input type="password" placeholder="ex. Az€rTy123!" v-model="password"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked" >Confirmez le mot de passe</ion-label>
-          <ion-input type="password" placeholder="ex. La même chose"></ion-input>
+          <ion-input type="password" placeholder="ex. La même chose" v-model="passwordbis"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -39,7 +39,7 @@
         </ion-item>
 
         <ion-item>
-          <router-link to="/connexion">
+          <router-link :to="{name:'login'}">
             <ion-button color="dark">Déconnexion</ion-button>
           </router-link>
         </ion-item>
@@ -56,6 +56,10 @@
 
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import firebase from "firebase";
+
+const db = firebase.database();
+const users = db.ref('/').child('utilisateurs');
 
 export default  {
   name: 'Tab3',
@@ -66,9 +70,18 @@ export default  {
       notifOn: true,
       username: null,
       password: null,
+      passwordbis: null,
     }
   },
   created() {
+    if (firebase.auth().currentUser !== null) {
+      console.log("userco :");
+      console.log(users);
+    }
+    else {
+      console.log("userpasco");
+      console.log(users);
+    }
     // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
     // // Listen for changes to the prefers-color-scheme media query
@@ -91,14 +104,20 @@ export default  {
       this.isDark = !this.isDark;
       document.body.classList.toggle('dark', this.isDark);
     },
-    decoUser() {
-      console.log("deco");
-    },
+    // decoUser() {
+    //   console.log("deco");
+    // },
     deleteUser() {
       console.log("delete");
     },
     saveUser() {
       console.log("save");
+      if (this.password == this.passwordbis) {
+      console.log("password "+this.password+" saved");
+      }
+      else {        
+      console.log("Mauvais mdp");
+      }
     },
   }
 }
