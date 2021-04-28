@@ -15,7 +15,7 @@
         </ion-card-header>
 
         <ion-card-content>
-          <form action="#" @submit="submit($event)">
+          <form action="#" @submit="submit" @keypress.enter="submit">
             <ion-item>
               <ion-label position="stacked">Nom d'utilisateur</ion-label>
               <ion-input placeholder="Nom d'utilisateur" v-model="username" required></ion-input>
@@ -47,6 +47,7 @@ import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardConte
 import { person } from 'ionicons/icons';
 import { useStore } from 'vuex';
 import { key } from '@/store';
+import firebase from "firebase";
 
 export default {
   name: "Connexion",
@@ -66,6 +67,9 @@ export default {
   created() {
     this.store = useStore(key)
   },
+  activated() {
+    firebase.auth().signOut()
+  },
   methods: {
     submit(event) {
       this.login()
@@ -76,25 +80,15 @@ export default {
       return false
     },
     async login() {
-      fetch('/api/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password,
-        })
-      }).then(value => {
-        this.store.commit('updateUser', {
-          token: value,
-          user: this.username
-        })
+      firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(userCredential => {
+        console.log(userCredential)
 
-      }).catch(console.log)
-
-      this.store.commit('updateUser', {
-        token: "dpovlknfdglkvjndjksfnkedsnfkjndfgjk",
-        user: this.username
+        this.store.commit('updateUser', userCredential.user)
+        this.$router.push({name: 'general'})
+      }).catch(reason => {
+        // TODO Alerte
+        console.log(reason);
       })
-      this.$router.push('/tchat-general')
     }
   }
 }
