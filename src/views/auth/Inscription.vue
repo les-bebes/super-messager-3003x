@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonInput, IonItem, IonLabel, alertController } from '@ionic/vue';
+import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonInput, IonItem, IonLabel } from '@ionic/vue';
 import { person } from 'ionicons/icons';
 import firebase from "firebase";
 

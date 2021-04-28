@@ -81,12 +81,19 @@ export default {
     },
     async login() {
       firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(userCredential => {
-        console.log(userCredential)
+        firebase.database().ref('/').child(`utilisateurs/${userCredential.user.uid}`).get().then(value => {
+          this.store.commit('updateUser', value.val())
 
-        this.store.commit('updateUser', userCredential.user)
-        this.$router.push({name: 'general'})
+          console.log(value.val())
+
+          this.store.commit('updateUser', userCredential.user)
+          this.$router.push({name: 'general'})
+        }).catch(reason => {
+          this.alertPop('Erreur', 'Impossible de récupérer vos données utilisateurs')
+          console.log(reason)
+        })
       }).catch(reason => {
-        // TODO Alerte
+        this.alertPop('Erreur', 'La connexion a échoué')
         console.log(reason);
       })
     }

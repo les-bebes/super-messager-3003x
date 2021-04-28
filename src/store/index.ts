@@ -1,10 +1,9 @@
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
-import firebase from "firebase";
 
 // define your typings for the store state
 export interface State {
-    user?: firebase.User;
+    user?: any;
 }
 
 // define injection key
